@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="IFRS">
+      <UniqueIdentifier>{8e2db6f2-dab2-4ef7-96a7-13ab021bed4e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\IFRS\IFRSEarlyWarningCompany.cpp">
+      <Filter>IFRS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IFRS\IFRSEarlyWarningDashboard.cpp">
+      <Filter>IFRS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IFRS\IRFSEarlyWarning.cpp">
+      <Filter>IFRS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IFRS\PRMCSectors.cpp">
+      <Filter>IFRS</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\IFRS\IFRSEarlyWarningCompany.h">
+      <Filter>IFRS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IFRS\IFRSEarlyWarningDashboard.h">
+      <Filter>IFRS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IFRS\IRFSEarlyWarning.h">
+      <Filter>IFRS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IFRS\PRMCSectors.h">
+      <Filter>IFRS</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

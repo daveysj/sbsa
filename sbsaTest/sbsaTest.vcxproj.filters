@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="sbsaTest.cpp" />
+    <ClCompile Include="IFRS\IFRSEarlyWarningCompanyTest.cpp">
+      <Filter>IFRS</Filter>
+    </ClCompile>
+    <ClCompile Include="IFRS\IFRSEarlyWarningDashboardTest.cpp">
+      <Filter>IFRS</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="sbsaTest.h" />
+    <ClInclude Include="IFRS\IFRSEarlyWarningCompanyTest.h">
+      <Filter>IFRS</Filter>
+    </ClInclude>
+    <ClInclude Include="IFRS\IFRSEarlyWarningDashboardTest.h">
+      <Filter>IFRS</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="IFRS">
+      <UniqueIdentifier>{f0297e52-7c0d-4fd6-a2c6-d638e939c1be}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
