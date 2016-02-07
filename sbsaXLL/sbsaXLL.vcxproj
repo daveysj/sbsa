@@ -79,10 +79,12 @@
   <ItemGroup>
     <ClCompile Include="addin_SBSA.cpp" />
     <ClCompile Include="Functions_IFRSEarlyWarning.cpp" />
+    <ClCompile Include="ObjectCommon.cpp" />
     <ClCompile Include="Register_IFRSEarlyWarning.cpp" />
     <ClCompile Include="Register_SBSA.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ObjectCommon.h" />
     <ClInclude Include="Register_SBSA.h" />
   </ItemGroup>
   <ItemGroup>

@@ -6,7 +6,7 @@
 #include <qlxl/session.hpp>
 #include <qlxl/conversions/all.hpp>
 
-#include <sjd\sjdXllObjects\ObjectCommon.h>
+#include <sbsa\sbsaXLL\ObjectCommon.h>
 
 #include <Tools\vectorOfVectorsToOper.h>
 #include <sbsa\IFRS\IRFSEarlyWarning.h>
@@ -146,6 +146,6 @@ DLLEXPORT OPER *ifrsPDMigration(OPER *shareNames,
         sjd::tableToOper(headings, sectorNames, data, returnValue);
         return &returnValue;
     } 
-    SJD_XLL_CATCH_OPER()
+    SBSA_XLL_CATCH_OPER()
 }
 
