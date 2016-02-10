@@ -20,16 +20,22 @@ namespace sbsa
       Date subsectorReviewDate;
    };
 
+   /*
    class PMRRSectors
    {
    public:
       PMRRSectors(vector<boost::shared_ptr<pmrrSector>> allSectors);
 
       vector<boost::shared_ptr<pmrrSector>> getAllSectors();
+      string<string> getAllSectorNames();
+      string<string> getAllSubsectorNames();
 
    private:
       vector<boost::shared_ptr<pmrrSector>> allSectors;
+      set<string> allSectorNames;
+      set<string> allSubsectorNames;
    };
+   */
 }
 
 

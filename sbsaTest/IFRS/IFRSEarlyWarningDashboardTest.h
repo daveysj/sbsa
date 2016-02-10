@@ -19,8 +19,11 @@ class IFRSEarlyWarningDashboardTest
   public:
 
     static void testConstruction();
+    static void testAgainstPmrrSubsectors();
 
     static boost::unit_test_framework::test_suite* suite();
+
+    static boost::shared_ptr<IFRSEarlyDashboard> getTestDashboard();
 };
 
 #endif

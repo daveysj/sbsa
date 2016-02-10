@@ -13,6 +13,90 @@ void IFRSEarlyWarningDashboardTest::testConstruction()
 {
    BOOST_MESSAGE("Testing IFRSEarlyWarningDashboard ...");
 
+   boost::shared_ptr<IFRSEarlyDashboard> dashboard = getTestDashboard();
+
+   BOOST_CHECK(dashboard->getNumberOfInputCompanies() == 6);
+   BOOST_CHECK(dashboard->getCompaniesWithoutData().size() == 1);
+   BOOST_CHECK(dashboard->getNumberOfUsableCompanies() == 5);
+   BOOST_CHECK(dashboard->getCompaniesWithData().size() == 5);
+   BOOST_CHECK(dashboard->getUniqueSectors().size() == 1);
+   BOOST_CHECK(dashboard->getUniqueSubSectors().size() == 3);
+
+   std::map<string, vector<boost::shared_ptr<IFRSEarlyWarningCompany>>> companiesBySector = 
+      dashboard->groupCompaniesBySubsector();
+   std::map<string, vector<boost::shared_ptr<IFRSEarlyWarningCompany>>>::iterator it;
+   it = companiesBySector.find("SubSector1");
+   BOOST_REQUIRE(it != companiesBySector.end());
+   BOOST_CHECK((it->second).size() == 2);
+
+   it = companiesBySector.find("SubSector2");
+   BOOST_REQUIRE(it != companiesBySector.end());
+   BOOST_CHECK((it->second).size() == 2);
+
+   it = companiesBySector.find("SubSector3");
+   BOOST_REQUIRE(it != companiesBySector.end());
+   BOOST_CHECK((it->second).size() == 1);
+
+}
+
+void IFRSEarlyWarningDashboardTest::testAgainstPmrrSubsectors() 
+{
+   boost::shared_ptr<IFRSEarlyDashboard> dashboard = getTestDashboard();
+
+   pmrrSector pmmrSector1, pmmrSector2, pmmrSector4, pmmrSector5;
+   pmmrSector1.sectorName = "Sector1";
+   pmmrSector1.subsectorName = "SubSector1";
+   pmmrSector1.subsectorReviewDate = Date(27, Jan, 2016);
+
+   pmmrSector2.sectorName = "Sector1";
+   pmmrSector2.subsectorName = "SubSector2";
+   pmmrSector2.subsectorReviewDate = Date(27, Jan, 2016);
+
+   pmmrSector4.sectorName = "Sector1";
+   pmmrSector4.subsectorName = "SubSector4";
+   pmmrSector4.subsectorReviewDate = Date(27, Jan, 2016);
+
+   pmmrSector5.sectorName = "Sector1";
+   pmmrSector5.subsectorName = "SubSector5";
+   pmmrSector5.subsectorReviewDate = Date(27, Jan, 2016);
+
+   vector<pmrrSector> pmrrSectors;
+   pmrrSectors.push_back(pmmrSector1);
+   pmrrSectors.push_back(pmmrSector2);
+   pmrrSectors.push_back(pmmrSector4);
+   pmrrSectors.push_back(pmmrSector5);
+
+   vector<pmrrSector> unrepresentedPmrrSubsectors;
+   set<string> unrepresetnedSubsectorNames;
+
+   dashboard->checkAllSubSectorsExist(pmrrSectors, unrepresentedPmrrSubsectors, unrepresetnedSubsectorNames);
+   BOOST_CHECK(unrepresentedPmrrSubsectors.size() == 2);
+   BOOST_CHECK(unrepresetnedSubsectorNames.size() == 1);
+
+   pmrrSector pmmrSector3;
+   pmmrSector3.sectorName = "Sector1";
+   pmmrSector3.subsectorName = "SubSector3";
+   pmmrSector3.subsectorReviewDate = Date(27, Jan, 2016);
+   pmrrSectors.push_back(pmmrSector3);
+   dashboard->checkAllSubSectorsExist(pmrrSectors, unrepresentedPmrrSubsectors, unrepresetnedSubsectorNames);
+   BOOST_CHECK(unrepresentedPmrrSubsectors.size() == 2);
+   BOOST_CHECK(unrepresetnedSubsectorNames.size() == 0);
+
+}
+
+test_suite* IFRSEarlyWarningDashboardTest::suite() 
+{
+    test_suite* suite = BOOST_TEST_SUITE("IFRSEarlyWarningDashboard Tests");
+    suite->add(BOOST_TEST_CASE(&IFRSEarlyWarningDashboardTest::testConstruction));
+    suite->add(BOOST_TEST_CASE(&IFRSEarlyWarningDashboardTest::testAgainstPmrrSubsectors));
+
+
+    return suite;
+}
+
+
+boost::shared_ptr<IFRSEarlyDashboard> IFRSEarlyWarningDashboardTest::getTestDashboard() 
+{
    string companyName = "Company"; 
    string companySector = "Sector"; 
    string companySubSector = "SubSector";
@@ -72,7 +156,6 @@ void IFRSEarlyWarningDashboardTest::testConstruction()
                               marketCap1,
                               historicPDs1));
 
-
    vector<boost::shared_ptr<IFRSEarlyWarningCompany>> companies;
    companies.push_back(company);
    companies.push_back(company1);
@@ -84,28 +167,6 @@ void IFRSEarlyWarningDashboardTest::testConstruction()
    boost::shared_ptr<IFRSEarlyDashboard> dashboard = boost::shared_ptr<IFRSEarlyDashboard>(
       new IFRSEarlyDashboard(companies));
 
-   BOOST_CHECK(dashboard->getNumberOfInputCompanies() == 6);
-   BOOST_CHECK(dashboard->getNumberOfUsableCompanies() == 5);
-
-   BOOST_CHECK(dashboard->getUniqueSectors().size() == 1);
-   BOOST_CHECK(dashboard->getUniqueSubSectors().size() == 3);
-
-   vector<string> originalCompanyNames = dashboard->getOrderedCompanyNames();
-   dashboard->sortAccordingToSubsectors();
-   vector<string> sortedCompanyNames = dashboard->getOrderedCompanyNames();
-   for (size_t i = 0; i < originalCompanyNames.size(); ++i)
-   {
-      cout << originalCompanyNames[i] << ": " << sortedCompanyNames[i] << endl;
-   }
-}
-
-
-test_suite* IFRSEarlyWarningDashboardTest::suite() 
-{
-    test_suite* suite = BOOST_TEST_SUITE("IFRSEarlyWarningDashboard Tests");
-    suite->add(BOOST_TEST_CASE(&IFRSEarlyWarningDashboardTest::testConstruction));
-
-
-    return suite;
+   return dashboard;
 }
 
