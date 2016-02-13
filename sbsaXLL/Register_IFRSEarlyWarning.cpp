@@ -18,6 +18,26 @@ void registerIRFS9EarlyWarning(const XLOPER &xDll)
             TempStrNoSize("\x0F""Weighting (USD)"),
             TempStrNoSize("\x1F""Starting Probability of default"),
             TempStrNoSize("\x1E""Current Probability of default"));
+
+        Excel(xlfRegister, 0, 18, &xDll,
+            TempStrNoSize("\x11""createIFRSCompany"),
+            TempStrNoSize("\x0A""CCCCCBPPL#"),
+            TempStrNoSize("\x11""createIFRSCompany"),
+            TempStrNoSize("\x3B""ObjectID,Name,Sector,Subsector,MktCap,PDDates,PDs,Permanent"),
+            TempStrNoSize("\x01""1"),                   
+            TempStrNoSize("\x04""PMRR"),
+            TempStrNoSize("\x00"""),                    
+            TempStrNoSize("\x00"""),                    
+            TempStrNoSize("\x35""Constructs a company with default probability history"),
+            TempStrNoSize("\x1A""id of object to be created"), 
+            TempStrNoSize("\x0C""Company Name"),
+            TempStrNoSize("\x0E""Company Sector"),
+            TempStrNoSize("\x11""Company Subsector"),
+            TempStrNoSize("\x10""Market Cap (USD)"),
+            TempStrNoSize("\x30""Dates on which there is default probability data"),
+            TempStrNoSize("\x2A""Default Probability Data"),
+            TempStrNoSize("\x1D""object permanent/nonpermanent"));
+
 }
 
 void unregisterIRFS9EarlyWarning(const XLOPER &xDll) 
@@ -45,5 +65,28 @@ void unregisterIRFS9EarlyWarning(const XLOPER &xDll)
 
         Excel4(xlfRegisterId, &xlRegID, 2, &xDll,
             TempStrNoSize("\x0F""ifrsPDMigration"));
+        Excel4(xlfUnregister, 0, 1, &xlRegID);
+
+        Excel(xlfRegister, 0, 18, &xDll,
+            TempStrNoSize("\x11""createIFRSCompany"),
+            TempStrNoSize("\x0A""CCCCCBPPL#"),
+            TempStrNoSize("\x11""createIFRSCompany"),
+            TempStrNoSize("\x3B""ObjectID,Name,Sector,Subsector,MktCap,PDDates,PDs,Permanent"),
+            TempStrNoSize("\x01""1"),                   
+            TempStrNoSize("\x04""PMRR"),
+            TempStrNoSize("\x00"""),                    
+            TempStrNoSize("\x00"""),                    
+            TempStrNoSize("\x35""Constructs a company with default probability history"),
+            TempStrNoSize("\x1A""id of object to be created"), 
+            TempStrNoSize("\x0C""Company Name"),
+            TempStrNoSize("\x0E""Company Sector"),
+            TempStrNoSize("\x11""Company Subsector"),
+            TempStrNoSize("\x10""Market Cap (USD)"),
+            TempStrNoSize("\x30""Dates on which there is default probability data"),
+            TempStrNoSize("\x2A""Default Probability Data"),
+            TempStrNoSize("\x1D""object permanent/nonpermanent"));
+
+        Excel4(xlfRegisterId, &xlRegID, 2, &xDll,
+            TempStrNoSize("\x11""createIFRSCompany"));
         Excel4(xlfUnregister, 0, 1, &xlRegID);
 }

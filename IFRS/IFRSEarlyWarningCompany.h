@@ -38,7 +38,7 @@ namespace sbsa
         
       virtual bool isOK();
       void resetErrorMessages();
-      vector<string> getErrorMessages() const;
+      std::vector<string> getErrorMessages() const;
       string getErrorMessagesAsString() const;
 
       string getCompanyName();

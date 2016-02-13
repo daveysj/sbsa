@@ -2,13 +2,29 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="addin_SBSA.cpp" />
-    <ClCompile Include="Functions_IFRSEarlyWarning.cpp" />
-    <ClCompile Include="Register_IFRSEarlyWarning.cpp" />
-    <ClCompile Include="Register_SBSA.cpp" />
     <ClCompile Include="ObjectCommon.cpp" />
+    <ClCompile Include="Register_IFRSEarlyWarning.cpp">
+      <Filter>Register</Filter>
+    </ClCompile>
+    <ClCompile Include="Register_SBSA.cpp">
+      <Filter>Register</Filter>
+    </ClCompile>
+    <ClCompile Include="Functions_IFRSEarlyWarning.cpp">
+      <Filter>Functions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Register_SBSA.h" />
     <ClInclude Include="ObjectCommon.h" />
+    <ClInclude Include="Register_SBSA.h">
+      <Filter>Register</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Register">
+      <UniqueIdentifier>{51f3cbeb-1cc8-4aee-bac2-5a033a3f9251}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Functions">
+      <UniqueIdentifier>{6dd732e9-a816-4899-b5ce-e458d03e6fba}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

@@ -20,6 +20,7 @@ class IFRSEarlyWarningDashboardTest
 
     static void testConstruction();
     static void testAgainstPmrrSubsectors();
+    static void testChangeInPDForOneSector();
 
     static boost::unit_test_framework::test_suite* suite();
 

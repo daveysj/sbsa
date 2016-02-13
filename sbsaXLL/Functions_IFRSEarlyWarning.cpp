@@ -6,13 +6,102 @@
 #include <qlxl/session.hpp>
 #include <qlxl/conversions/all.hpp>
 
+#include <sbsa\IFRS\IRFSEarlyWarning.h>
 #include <sbsa\sbsaXLL\ObjectCommon.h>
 
 #include <Tools\vectorOfVectorsToOper.h>
-#include <sbsa\IFRS\IRFSEarlyWarning.h>
+#include <Tools\vo_GenericUnimplemented.h>
+#include <sbsa\sbsaObjects\IFRS\IFRSEarlyWarningCompanyObject.h>
+
+#include <ohxl\convert_oper.hpp>
 
 #include <iomanip> 
 #include <algorithm>
+
+
+/*======================================================================================
+Create an instance of the object sjdObjects::SimpleMargin and return its ID
+=======================================================================================*/
+DLLEXPORT char *createIFRSCompany(char *objectID,
+                                  char *companyNameChar,
+                                  char *companySectorChar,
+                                  char *companySubSectorChar,
+                                  double *marketCap,
+                                  OPER *historicPDDates,
+                                  OPER *historicPDs,
+                                  bool *permanent) 
+{
+
+    boost::shared_ptr<ObjectHandler::FunctionCall> functionCall;
+    static char ret[XL_MAX_STR_LEN];
+    try 
+    {
+        functionCall = boost::shared_ptr<ObjectHandler::FunctionCall>
+            (new ObjectHandler::FunctionCall("createIFRSCompany"));
+
+        std::string companyName(companyNameChar);
+
+        std::string companySector(companySectorChar);
+
+        std::string companySubsector(companySubSectorChar);
+           
+        std::vector<QuantLib::Date> pdDates =
+            ObjectHandler::operToVector<QuantLib::Date>(*historicPDDates, "PDDates");
+
+        std::vector<double> pds =
+            ObjectHandler::operToVector<double>(*historicPDs, "ProbabilityOfDefault");
+
+        // Strip the Excel cell update counter suffix from Object IDs        
+        std::string ObjectIdStrip = ObjectHandler::CallingRange::getStub(objectID);
+        // Construct the Value Object
+        boost::shared_ptr<ObjectHandler::ValueObject> valueObject(
+            new sjdObjects::ValueObjects::GenericUnimplementedValueObject(ObjectIdStrip,false));
+        // Construct the Object
+
+        sbsaObjects::IFRSEarlyWarningCompany *company;
+        if (pds.size() != pdDates.size())
+        {
+           // create and return 
+           company = new sbsaObjects::IFRSEarlyWarningCompany(valueObject,
+                                                              companyName, 
+                                                              companySector, 
+                                                              companySubsector,
+                                                              *permanent);
+        }
+        else 
+        {
+           map<Date, double> historicPDs;
+           for (size_t i = 0; i < pdDates.size(); ++i)
+           {
+              historicPDs[pdDates[i]] = pds[i];
+           }
+
+           company = new sbsaObjects::IFRSEarlyWarningCompany(valueObject,
+                                                              companyName, 
+                                                              companySector, 
+                                                              companySubsector,
+                                                              *marketCap,
+                                                              historicPDs,
+                                                              *permanent);
+
+        }
+
+        boost::shared_ptr<ObjectHandler::Object> object(company);
+        if (!company->isOK()) 
+        {
+            ObjectHandler::stringToChar(company->getErrorMessages(), ret);
+        }
+        else 
+        {
+            // Store the Object in the Repository
+            std::string returnValue =
+                ObjectHandler::RepositoryXL::instance().storeObject(ObjectIdStrip, object, true);
+            ObjectHandler::stringToChar(returnValue, ret);
+        }
+        return ret;
+    } 
+    SBSA_XLL_CATCH_STRING()
+}
 
 
 DLLEXPORT OPER *ifrsPDMigration(OPER *shareNames,

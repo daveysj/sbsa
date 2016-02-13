@@ -20,9 +20,9 @@ namespace sbsa
    {
       string sectorName;
       string subsectorName;
-      Date sectorReviewDate;
+      Date subsectorReviewDate;
       Date todaysDate;
-      int numberOfShares;
+      size_t numberOfShares;
       double ratingNotchChange;
       double basePD;
       double currentPD;
@@ -62,11 +62,28 @@ namespace sbsa
                                    vector<pmrrSector> &unrepresentedPmrrSubsectors,
                                    set<string> &unrepresetnedSubsectorNames);
 
-      vector<ifrsSector> getSubsectorRatingsChange(vector<pmrrSector> pmrrSectors);
+      vector<ifrsSector> getSubsectorRatingsChange(vector<pmrrSector> pmrrSectors, Date toDate);
 
+      // Groups companies by Subsector name (camelCase version)
       std::map<string, vector<boost::shared_ptr<IFRSEarlyWarningCompany>>> groupCompaniesBySubsector();
 
-    private:
+      // returns a vector of companies which were not included in the calcuation becuase the did not have
+      // data on either the fromDate or the toDate
+      static vector<boost::shared_ptr<IFRSEarlyWarningCompany>> getCompaniesWithoutMissingData(
+                                                            vector<boost::shared_ptr<IFRSEarlyWarningCompany>> groupedCompanies, 
+                                                            Date fromDate, 
+                                                            Date toDate);
+
+      static void getChangeInPD(vector<boost::shared_ptr<IFRSEarlyWarningCompany>> groupedCompanies, 
+                                Date fromDate, 
+                                Date toDate,
+                                double &basePD,
+                                double &currentPD,
+                                double &changeInPD);
+
+      static double convertChangeInPDToChangeInRatings(double pd);
+
+   private:
 
       int inputCompanies, usableCompanies;
       vector<boost::shared_ptr<IFRSEarlyWarningCompany>> companies;

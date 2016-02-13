@@ -115,16 +115,28 @@ namespace sbsa
    }
 
 
-   vector<ifrsSector> IFRSEarlyDashboard::getSubsectorRatingsChange(vector<pmrrSector> pmrrSectors)
+   vector<ifrsSector> IFRSEarlyDashboard::getSubsectorRatingsChange(vector<pmrrSector> pmrrSectors, Date toDate)
    {
-
-      std::map<string, vector<boost::shared_ptr<IFRSEarlyWarningCompany>>> groupedCompanies = groupCompaniesBySubsector();
-
-      vector<ifrsSector> tmp;
-
-      map<string, vector<boost::shared_ptr<IFRSEarlyWarningCompany>>> companiesBySubsector = groupCompaniesBySubsector();
-
-      return tmp;
+      vector<ifrsSector> sectorAnalysis;
+      map<string, vector<boost::shared_ptr<IFRSEarlyWarningCompany>>> groupedCompanies = groupCompaniesBySubsector();
+      vector<pmrrSector>::iterator it;
+      for (it = pmrrSectors.begin(); it != pmrrSectors.end(); ++it)
+      {
+         ifrsSector outputSector;
+         outputSector.sectorName = (*it).sectorName;
+         outputSector.subsectorName = (*it).subsectorName;
+         outputSector.subsectorReviewDate = (*it).subsectorReviewDate;
+         outputSector.todaysDate = toDate;
+         vector<boost::shared_ptr<IFRSEarlyWarningCompany>> companuesInSubsector = groupedCompanies.find((*it).subsectorName)->second;
+         outputSector.numberOfShares = getCompaniesWithoutMissingData(companuesInSubsector, (*it).subsectorReviewDate, toDate).size();
+         double basePD, currentPD, changeInPD;
+         getChangeInPD(companuesInSubsector, (*it).subsectorReviewDate, toDate, basePD, currentPD, changeInPD);
+         outputSector.basePD = basePD;
+         outputSector.currentPD = currentPD;
+         outputSector.ratingNotchChange = convertChangeInPDToChangeInRatings(changeInPD);
+         sectorAnalysis.push_back(outputSector);
+      }
+      return sectorAnalysis;
    }
 
 
@@ -147,4 +159,74 @@ namespace sbsa
       return companiesBySubsector;
    }
 
+
+   vector<boost::shared_ptr<IFRSEarlyWarningCompany>> IFRSEarlyDashboard::getCompaniesWithoutMissingData(vector<boost::shared_ptr<IFRSEarlyWarningCompany>> groupedCompanies, 
+                                                                                                         Date fromDate, 
+                                                                                                         Date toDate)
+   {
+      vector<boost::shared_ptr<IFRSEarlyWarningCompany>> companiesWithoutMissingData = vector<boost::shared_ptr<IFRSEarlyWarningCompany>>();
+
+      vector<boost::shared_ptr<IFRSEarlyWarningCompany>>::iterator it;
+      for (it = groupedCompanies.begin(); it != groupedCompanies.end(); ++it)
+      {
+         if ((*it)->isOK() &&  ((*it)->containsData(toDate)) && ((*it)->containsData(fromDate)))
+         {
+            companiesWithoutMissingData.push_back(*it);
+         }
+      }
+      return companiesWithoutMissingData;
+   }
+
+   void IFRSEarlyDashboard::getChangeInPD(vector<boost::shared_ptr<IFRSEarlyWarningCompany>> groupedCompanies, 
+                                          Date fromDate, 
+                                          Date toDate,
+                                          double &basePD,
+                                          double &currentPD,
+                                          double &changeInPD)
+   {
+      basePD = 0;
+      currentPD = 0;
+      changeInPD = 0;
+
+      double totalWeigth = 0; 
+
+      vector<boost::shared_ptr<IFRSEarlyWarningCompany>>::iterator it;
+      for (it = groupedCompanies.begin(); it != groupedCompanies.end(); ++it)
+      {
+         if ((*it)->isOK() &&  ((*it)->containsData(toDate)) && ((*it)->containsData(fromDate)))
+         {
+            double weight = (*it)->getMarketCap();
+            totalWeigth += weight;
+            double pd1 = weight * (*it)->getDefaultProbability(fromDate);
+            basePD += pd1;
+            double pd2 = weight * (*it)->getDefaultProbability(toDate);
+            currentPD += pd2;
+            double pdMove = pd2 - pd1;
+            changeInPD += pdMove;
+         }
+      }
+      if (totalWeigth > 1e-14)
+      {
+         basePD /= totalWeigth;
+         currentPD /= totalWeigth;
+         changeInPD /= totalWeigth;
+      }
+      else 
+      {
+         basePD = 0;
+         currentPD = 0;
+         changeInPD = 0;
+      }
+   }
+
+   double IFRSEarlyDashboard::convertChangeInPDToChangeInRatings(double pd)
+   {
+      if ((pd < 0) || (pd > 1))
+      {
+         return numeric_limits<double>::quiet_NaN();
+      }
+      double ratingsChange = log(pd) / log(2.0); // log base 2
+      ratingsChange *= -2; // 2 notches = double or half PD
+      return ratingsChange;
+   }
 }

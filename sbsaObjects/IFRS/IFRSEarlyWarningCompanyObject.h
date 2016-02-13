@@ -2,6 +2,7 @@
 #define SBSA_OBJ_IFRSEarlyWarningCompany
 
 #include <oh/libraryobject.hpp>
+#include <oh\ohdefines.hpp>
 
 #include <sbsa\IFRS\IFRSEarlyWarningCompany.h>
 
@@ -16,9 +17,20 @@ namespace sbsaObjects
     { 
     public:
         IFRSEarlyWarningCompany(const boost::shared_ptr<ObjectHandler::ValueObject>& properties,
-                                boost::shared_ptr<sbsa::IFRSEarlyWarningCompany> company,
+                                string companyName, 
+                                string companySector, 
+                                string companySubSector,
                                 bool permanent);
 
+        IFRSEarlyWarningCompany(const boost::shared_ptr<ObjectHandler::ValueObject>& properties,
+                                string companyName, 
+                                string companySector, 
+                                string companySubSector,
+                                double marketCap,
+                                map<Date, double> historicPDs,
+                                bool permanent);
+
+        string getCompanySummary();
 
         bool isOK() const;
         string getErrorMessages() const; 
