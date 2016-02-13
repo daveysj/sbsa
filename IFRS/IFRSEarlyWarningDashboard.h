@@ -52,14 +52,17 @@ namespace sbsa
       vector<boost::shared_ptr<IFRSEarlyWarningCompany>> getCompaniesWithData();
 
       // Compares the list of "uniqueSubsectors" against the input pmrrSectors.subsectorName and
-      // unrepresentedPmrrSubsectors returns a vector of all subsector names that are in "pmrrSectors" but not in "companies"
-      // unrepresetnedSubsectors returns a vector of all subsector names that are in "companies" but not in "pmrrSectors"
-      // As a rule the "unrepresetnedSubsectors" vector should be blank before any analysis is performed
+      // unrepresentedPmrrSubsectors returns a vector of all subsector names that are in 
+      //    "pmrrSectors" but not in "companies"
+      // unrepresetnedSubsectors returns a vector of all subsector names that are in "companies" 
+      //    but not in "pmrrSectors"
+      // As a rule the "unrepresetnedSubsectors" vector should be empty before any analysis is 
+      // performed.
       void checkAllSubSectorsExist(vector<pmrrSector> pmrrSectors, 
                                    vector<pmrrSector> &unrepresentedPmrrSubsectors,
                                    set<string> &unrepresetnedSubsectorNames);
 
-      vector<boost::shared_ptr<ifrsSector>> getSubsectorRatingsChange(vector<boost::shared_ptr<pmrrSector>> pmrrSectors);
+      vector<ifrsSector> getSubsectorRatingsChange(vector<pmrrSector> pmrrSectors);
 
       std::map<string, vector<boost::shared_ptr<IFRSEarlyWarningCompany>>> groupCompaniesBySubsector();
 

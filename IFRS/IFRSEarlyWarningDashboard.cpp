@@ -115,11 +115,14 @@ namespace sbsa
    }
 
 
-   vector<boost::shared_ptr<ifrsSector>> IFRSEarlyDashboard::getSubsectorRatingsChange(vector<boost::shared_ptr<pmrrSector>> pmrrSectors)
+   vector<ifrsSector> IFRSEarlyDashboard::getSubsectorRatingsChange(vector<pmrrSector> pmrrSectors)
    {
-      vector<boost::shared_ptr<ifrsSector>> tmp;
 
-       map<string, vector<boost::shared_ptr<IFRSEarlyWarningCompany>>> companiesBySubsector = groupCompaniesBySubsector();
+      std::map<string, vector<boost::shared_ptr<IFRSEarlyWarningCompany>>> groupedCompanies = groupCompaniesBySubsector();
+
+      vector<ifrsSector> tmp;
+
+      map<string, vector<boost::shared_ptr<IFRSEarlyWarningCompany>>> companiesBySubsector = groupCompaniesBySubsector();
 
       return tmp;
    }
