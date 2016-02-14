@@ -12,6 +12,8 @@
 #include <Tools\vectorOfVectorsToOper.h>
 #include <Tools\vo_GenericUnimplemented.h>
 #include <sbsa\sbsaObjects\IFRS\IFRSEarlyWarningCompanyObject.h>
+#include <sbsa\sbsaObjects\IFRS\PRMCSectorObject.h>
+#include <sbsa\sbsaObjects\IFRS\IFRSEarlyWarningDashboardObject.h>
 
 #include <ohxl\convert_oper.hpp>
 
@@ -20,10 +22,10 @@
 
 
 /*======================================================================================
-Create an instance of the object sjdObjects::SimpleMargin and return its ID
+Create an instance of the object sbsaObjects::createIFRSCompany and return its ID. 
+Note that the company name is used as the object name
 =======================================================================================*/
-DLLEXPORT char *createIFRSCompany(char *objectID,
-                                  char *companyNameChar,
+DLLEXPORT char *createIFRSCompany(char *companyNameChar,
                                   char *companySectorChar,
                                   char *companySubSectorChar,
                                   double marketCap,
@@ -56,7 +58,7 @@ DLLEXPORT char *createIFRSCompany(char *objectID,
 
 
         // Strip the Excel cell update counter suffix from Object IDs        
-        std::string ObjectIdStrip = ObjectHandler::CallingRange::getStub(objectID);
+        std::string ObjectIdStrip = ObjectHandler::CallingRange::getStub(companyNameChar);
         // Construct the Value Object
         boost::shared_ptr<ObjectHandler::ValueObject> valueObject(
             new sjdObjects::ValueObjects::GenericUnimplementedValueObject(ObjectIdStrip,false));
@@ -103,6 +105,104 @@ DLLEXPORT char *createIFRSCompany(char *objectID,
             ObjectHandler::stringToChar(returnValue, ret);
         }
         return ret;
+    } 
+    SBSA_XLL_CATCH_STRING()
+}
+
+/*======================================================================================
+Create an instance of the object sbsaObjects::createIFRSDashboard and return its ID. 
+=======================================================================================*/
+DLLEXPORT char *createIFRSDashboard(char *objectID,
+                                    OPER *inputCompanies,
+                                    OPER *Trigger,
+                                    bool *permanent) 
+{
+
+    boost::shared_ptr<ObjectHandler::FunctionCall> functionCall;
+    static char ret[XL_MAX_STR_LEN];
+    try 
+    {
+        functionCall = boost::shared_ptr<ObjectHandler::FunctionCall>
+            (new ObjectHandler::FunctionCall("createIFRSDashboard"));
+        ObjectHandler::validateRange(Trigger, "Trigger");
+
+        std::vector<boost::shared_ptr<sbsaObjects::IFRSEarlyWarningCompany>> companies;
+        std::vector<string> companyIDLib = ObjectHandler::operToVector<string>(*inputCompanies, "CompanyIDs");
+        for (size_t i = 0; i < companyIDLib.size(); ++i) 
+        {
+            OH_GET_OBJECT(contractIdObjPtr, companyIDLib[i], sbsaObjects::IFRSEarlyWarningCompany)
+            companies.push_back(contractIdObjPtr);
+        }
+
+
+        // Strip the Excel cell update counter suffix from Object IDs        
+        std::string ObjectIdStrip = ObjectHandler::CallingRange::getStub(objectID);
+        // Construct the Value Object
+        boost::shared_ptr<ObjectHandler::ValueObject> valueObject(
+            new sjdObjects::ValueObjects::GenericUnimplementedValueObject(ObjectIdStrip,false));
+        // Construct the Object
+
+        sbsaObjects::IFRSEarlyWarningDashboard *dashboard;
+        dashboard = new sbsaObjects::IFRSEarlyWarningDashboard(valueObject, companies, *permanent);
+
+        boost::shared_ptr<ObjectHandler::Object> object(dashboard);
+        if (!dashboard->isOK()) 
+        {
+            ObjectHandler::stringToChar(dashboard->getErrorMessages(), ret);
+        }
+        else 
+        {
+            // Store the Object in the Repository
+            std::string returnValue =
+                ObjectHandler::RepositoryXL::instance().storeObject(ObjectIdStrip, object, true);
+            ObjectHandler::stringToChar(returnValue, ret);
+        }
+        return ret;
+    } 
+    SBSA_XLL_CATCH_STRING()
+}
+
+/*======================================================================================
+Create an instance of the object sbsaObjects::PMRRSector and return its ID. The sector
+name will be used as the object name
+=======================================================================================*/
+DLLEXPORT char *createPMRRSector(char *sectorNameChar,
+                                 char *subsectorNameChar,
+                                 OPER *subsectorReviewDateInput,
+                                 bool *permanent) 
+{
+
+    boost::shared_ptr<ObjectHandler::FunctionCall> functionCall;
+    static char ret[XL_MAX_STR_LEN];
+    try 
+   {
+      functionCall = boost::shared_ptr<ObjectHandler::FunctionCall>
+            (new ObjectHandler::FunctionCall("createPMRRSector"));
+
+      std::string sectorName(sectorNameChar);
+
+      std::string subsectorName(subsectorNameChar);
+
+      QuantLib::Date subsectorReviewDate = ObjectHandler::convert2<QuantLib::Date>(
+            ObjectHandler::ConvertOper(*subsectorReviewDateInput), "Sector Review Date");
+
+      // Strip the Excel cell update counter suffix from Object IDs        
+      std::string ObjectIdStrip = ObjectHandler::CallingRange::getStub(sectorNameChar);
+      // Construct the Value Object
+      boost::shared_ptr<ObjectHandler::ValueObject> valueObject(
+            new sjdObjects::ValueObjects::GenericUnimplementedValueObject(ObjectIdStrip,false));
+      // Construct the Object
+        sbsaObjects::PMRRSector *sector = new sbsaObjects::PMRRSector(valueObject,
+                                                                       sectorName, 
+                                                                       subsectorName, 
+                                                                       subsectorReviewDate,
+                                                                       *permanent);
+        boost::shared_ptr<ObjectHandler::Object> object(sector);
+      // Store the Object in the Repository
+      std::string returnValue =
+            ObjectHandler::RepositoryXL::instance().storeObject(ObjectIdStrip, object, true);
+      ObjectHandler::stringToChar(returnValue, ret);
+      return ret;
     } 
     SBSA_XLL_CATCH_STRING()
 }
@@ -197,7 +297,7 @@ DLLEXPORT OPER *ifrsPDMigration(OPER *shareNames,
 
 
         string errorMessage = "";
-        if (!sbsa::IFRSEarlyWarningDashboard::checkDimensions(shareNamesCpp,
+        if (!sbsa::IFRSEarlyWarning::checkDimensions(shareNamesCpp,
                                                                      sectorsCpp,
                                                                      weightingsCpp,
                                                                      basePDCpp,
@@ -212,7 +312,7 @@ DLLEXPORT OPER *ifrsPDMigration(OPER *shareNames,
         
         //std::string ObjectIdStrip = ObjectHandler::CallingRange::getStub(objectID);
 
-        sbsa::IFRSEarlyWarningDashboard ifrs(shareNamesCpp, 
+        sbsa::IFRSEarlyWarning ifrs(shareNamesCpp, 
                                                     sectorsCpp, 
                                                     weightingsCpp, 
                                                     basePDCpp, 

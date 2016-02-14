@@ -10,7 +10,7 @@
 namespace sbsaObjects 
 {        
     /*======================================================================================
-    Contract
+    IFRSEarlyWarningCompany
 
     =======================================================================================*/
     class IFRSEarlyWarningCompany : public ObjectHandler::LibraryObject<sbsa::IFRSEarlyWarningCompany> 

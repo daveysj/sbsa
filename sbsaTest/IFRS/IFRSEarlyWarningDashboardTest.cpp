@@ -13,7 +13,7 @@ void IFRSEarlyWarningDashboardTest::testConstruction()
 {
    BOOST_MESSAGE("Testing IFRSEarlyWarningDashboard ...");
 
-   boost::shared_ptr<IFRSEarlyDashboard> dashboard = getTestDashboard();
+   boost::shared_ptr<IFRSEarlyWarningDashboard> dashboard = getTestDashboard();
 
    BOOST_CHECK(dashboard->getNumberOfInputCompanies() == 6);
    BOOST_CHECK(dashboard->getCompaniesWithoutData().size() == 1);
@@ -41,7 +41,7 @@ void IFRSEarlyWarningDashboardTest::testConstruction()
 
 void IFRSEarlyWarningDashboardTest::testAgainstPmrrSubsectors() 
 {
-   boost::shared_ptr<IFRSEarlyDashboard> dashboard = getTestDashboard();
+   boost::shared_ptr<IFRSEarlyWarningDashboard> dashboard = getTestDashboard();
 
    pmrrSector pmmrSector1, pmmrSector2, pmmrSector4, pmmrSector5;
    pmmrSector1.sectorName = "Sector1";
@@ -121,23 +121,23 @@ void IFRSEarlyWarningDashboardTest::testChangeInPDForOneSector()
    companies.push_back(company1);
    companies.push_back(company2);
 
-   //boost::shared_ptr<IFRSEarlyDashboard> dashboard = boost::shared_ptr<IFRSEarlyDashboard>(
-   //   new IFRSEarlyDashboard(companies));
+   //boost::shared_ptr<IFRSEarlyWarningDashboard> dashboard = boost::shared_ptr<IFRSEarlyWarningDashboard>(
+   //   new IFRSEarlyWarningDashboard(companies));
 
 
    vector<boost::shared_ptr<IFRSEarlyWarningCompany>> missing = 
-                     IFRSEarlyDashboard::getCompaniesWithoutMissingData(companies, 
+                     IFRSEarlyWarningDashboard::getCompaniesWithoutMissingData(companies, 
                                                                      Date(1, Dec, 2015), 
                                                                      Date(2, Dec, 2015));
    BOOST_CHECK(missing.size() == 0);
 
-   missing = IFRSEarlyDashboard::getCompaniesWithoutMissingData(companies, 
+   missing = IFRSEarlyWarningDashboard::getCompaniesWithoutMissingData(companies, 
                                                              Date(31, Dec, 2015), 
                                                              Date(2, Jan, 2016));
    BOOST_REQUIRE(missing.size() == 1);
    BOOST_CHECK(missing[0]->getCompanyName().compare(companyName2) == 0);
 
-   missing = IFRSEarlyDashboard::getCompaniesWithoutMissingData(companies, 
+   missing = IFRSEarlyWarningDashboard::getCompaniesWithoutMissingData(companies, 
                                                              Date(1, Jan, 2016), 
                                                              Date(2, Jan, 2016));
    BOOST_CHECK(missing.size() == 2);
@@ -146,7 +146,7 @@ void IFRSEarlyWarningDashboardTest::testChangeInPDForOneSector()
    Date toDate = Date(3, Jan, 2016);
 
    double changeInPD = 0, basePD = 0, currentPD = 0;
-   IFRSEarlyDashboard::getChangeInPD(companies, fromDate, toDate, basePD, currentPD, changeInPD);
+   IFRSEarlyWarningDashboard::getChangeInPD(companies, fromDate, toDate, basePD, currentPD, changeInPD);
 
    double basePDManual = marketCap1 * historicPDs1.find(fromDate)->second + marketCap2 * historicPDs2.find(fromDate)->second;
    basePDManual /= (marketCap1 + marketCap2);
@@ -174,7 +174,7 @@ test_suite* IFRSEarlyWarningDashboardTest::suite()
 }
 
 
-boost::shared_ptr<IFRSEarlyDashboard> IFRSEarlyWarningDashboardTest::getTestDashboard() 
+boost::shared_ptr<IFRSEarlyWarningDashboard> IFRSEarlyWarningDashboardTest::getTestDashboard() 
 {
    string companyName = "Company"; 
    string companySector = "Sector"; 
@@ -243,8 +243,8 @@ boost::shared_ptr<IFRSEarlyDashboard> IFRSEarlyWarningDashboardTest::getTestDash
    companies.push_back(company4);
    companies.push_back(company5);
 
-   boost::shared_ptr<IFRSEarlyDashboard> dashboard = boost::shared_ptr<IFRSEarlyDashboard>(
-      new IFRSEarlyDashboard(companies));
+   boost::shared_ptr<IFRSEarlyWarningDashboard> dashboard = boost::shared_ptr<IFRSEarlyWarningDashboard>(
+      new IFRSEarlyWarningDashboard(companies));
 
    return dashboard;
 }

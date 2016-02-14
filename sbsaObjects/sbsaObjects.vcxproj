@@ -68,9 +68,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="IFRS\IFRSEarlyWarningCompanyObject.cpp" />
+    <ClCompile Include="IFRS\IFRSEarlyWarningDashboardObject.cpp" />
+    <ClCompile Include="IFRS\PRMCSectorObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IFRS\IFRSEarlyWarningCompanyObject.h" />
+    <ClInclude Include="IFRS\IFRSEarlyWarningDashboardObject.h" />
+    <ClInclude Include="IFRS\PRMCSectorObject.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

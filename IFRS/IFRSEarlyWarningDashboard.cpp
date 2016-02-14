@@ -9,10 +9,10 @@ namespace sbsa
    }
 
 
-   IFRSEarlyDashboard::IFRSEarlyDashboard(vector<boost::shared_ptr<IFRSEarlyWarningCompany>> companiesInput)
+   IFRSEarlyWarningDashboard::IFRSEarlyWarningDashboard(vector<boost::shared_ptr<IFRSEarlyWarningCompany>> companiesInput)
    {
       errorTracking = boost::shared_ptr<sjdTools::ErrorTracking>(
-         new sjdTools::ErrorTracking("IFRSEarlyDashboard"));
+         new sjdTools::ErrorTracking("IFRSEarlyWarningDashboard"));
       resetErrorMessages();
 
       companies = vector<boost::shared_ptr<IFRSEarlyWarningCompany>>();
@@ -36,57 +36,57 @@ namespace sbsa
 
    }
 
-   void IFRSEarlyDashboard::resetErrorMessages()
+   void IFRSEarlyWarningDashboard::resetErrorMessages()
    {
        errorTracking->clearErrorMessages();
    }
 
-   bool IFRSEarlyDashboard::isOK()
+   bool IFRSEarlyWarningDashboard::isOK()
    {
        return !errorTracking->getHasErrors();
    }
 
-   vector<string> IFRSEarlyDashboard::getErrorMessages() const 
+   vector<string> IFRSEarlyWarningDashboard::getErrorMessages() const 
    {
        return errorTracking->getErrorMessages();
    }
 
-   string IFRSEarlyDashboard::getErrorMessagesAsString() const 
+   string IFRSEarlyWarningDashboard::getErrorMessagesAsString() const 
    {
        return errorTracking->getErrorMessagesAsString();
    }
 
-   int IFRSEarlyDashboard::getNumberOfInputCompanies()
+   int IFRSEarlyWarningDashboard::getNumberOfInputCompanies()
    {
       return inputCompanies; 
    }
    
-   int IFRSEarlyDashboard::getNumberOfUsableCompanies()
+   int IFRSEarlyWarningDashboard::getNumberOfUsableCompanies()
    {
       return usableCompanies;
    }
 
-   set<string> IFRSEarlyDashboard::getUniqueSectors()
+   set<string> IFRSEarlyWarningDashboard::getUniqueSectors()
    {
       return uniqueSectors;
    }
 
-   set<string> IFRSEarlyDashboard::getUniqueSubSectors()
+   set<string> IFRSEarlyWarningDashboard::getUniqueSubSectors()
    {
       return uniqueSubsectors;
    }
 
-   vector<boost::shared_ptr<IFRSEarlyWarningCompany>> IFRSEarlyDashboard::getCompaniesWithoutData()
+   vector<boost::shared_ptr<IFRSEarlyWarningCompany>> IFRSEarlyWarningDashboard::getCompaniesWithoutData()
    {
       return companiesWithoutData;
    }
 
-   vector<boost::shared_ptr<IFRSEarlyWarningCompany>> IFRSEarlyDashboard::getCompaniesWithData()
+   vector<boost::shared_ptr<IFRSEarlyWarningCompany>> IFRSEarlyWarningDashboard::getCompaniesWithData()
    {
       return companies;
    }
 
-   void IFRSEarlyDashboard::checkAllSubSectorsExist(vector<pmrrSector> pmrrSectors, 
+   void IFRSEarlyWarningDashboard::checkAllSubSectorsExist(vector<pmrrSector> pmrrSectors, 
                                                     vector<pmrrSector> &unrepresentedPmrrSubsectors,
                                                     set<string> &unrepresetnedSubsectors)
    {
@@ -115,7 +115,7 @@ namespace sbsa
    }
 
 
-   vector<ifrsSector> IFRSEarlyDashboard::getSubsectorRatingsChange(vector<pmrrSector> pmrrSectors, Date toDate)
+   vector<ifrsSector> IFRSEarlyWarningDashboard::getSubsectorRatingsChange(vector<pmrrSector> pmrrSectors, Date toDate)
    {
       vector<ifrsSector> sectorAnalysis;
       map<string, vector<boost::shared_ptr<IFRSEarlyWarningCompany>>> groupedCompanies = groupCompaniesBySubsector();
@@ -140,7 +140,7 @@ namespace sbsa
    }
 
 
-   map<string, vector<boost::shared_ptr<IFRSEarlyWarningCompany>>> IFRSEarlyDashboard::groupCompaniesBySubsector()
+   map<string, vector<boost::shared_ptr<IFRSEarlyWarningCompany>>> IFRSEarlyWarningDashboard::groupCompaniesBySubsector()
    {
       vector<boost::shared_ptr<IFRSEarlyWarningCompany>>::iterator startingLocation = companies.begin();
       map<string, vector<boost::shared_ptr<IFRSEarlyWarningCompany>>> companiesBySubsector;
@@ -160,7 +160,7 @@ namespace sbsa
    }
 
 
-   vector<boost::shared_ptr<IFRSEarlyWarningCompany>> IFRSEarlyDashboard::getCompaniesWithoutMissingData(vector<boost::shared_ptr<IFRSEarlyWarningCompany>> groupedCompanies, 
+   vector<boost::shared_ptr<IFRSEarlyWarningCompany>> IFRSEarlyWarningDashboard::getCompaniesWithoutMissingData(vector<boost::shared_ptr<IFRSEarlyWarningCompany>> groupedCompanies, 
                                                                                                          Date fromDate, 
                                                                                                          Date toDate)
    {
@@ -177,7 +177,7 @@ namespace sbsa
       return companiesWithoutMissingData;
    }
 
-   void IFRSEarlyDashboard::getChangeInPD(vector<boost::shared_ptr<IFRSEarlyWarningCompany>> groupedCompanies, 
+   void IFRSEarlyWarningDashboard::getChangeInPD(vector<boost::shared_ptr<IFRSEarlyWarningCompany>> groupedCompanies, 
                                           Date fromDate, 
                                           Date toDate,
                                           double &basePD,
@@ -219,7 +219,7 @@ namespace sbsa
       }
    }
 
-   double IFRSEarlyDashboard::convertChangeInPDToChangeInRatings(double pd)
+   double IFRSEarlyWarningDashboard::convertChangeInPDToChangeInRatings(double pd)
    {
       if ((pd < 0) || (pd > 1))
       {

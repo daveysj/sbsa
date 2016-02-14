@@ -4,10 +4,10 @@
 namespace sbsa
 {
     /*======================================================================================
-    sbsaObjects::IFRSEarlyWarningDashboard
+    sbsaObjects::IFRSEarlyWarning
 
     =======================================================================================*/
-    IFRSEarlyWarningDashboard::IFRSEarlyWarningDashboard(std::vector<string> shareNamesInput, 
+    IFRSEarlyWarning::IFRSEarlyWarning(std::vector<string> shareNamesInput, 
                                                          std::vector<string> sectorsInput, 
                                                          std::vector<double> weightingsInput, 
                                                          std::vector<double> basePDInput,
@@ -20,7 +20,7 @@ namespace sbsa
         currentPD = currentPDInput;
     }
 
-    bool IFRSEarlyWarningDashboard::checkDimensions(std::vector<string> shareNames, 
+    bool IFRSEarlyWarning::checkDimensions(std::vector<string> shareNames, 
                                                     std::vector<string> sectors, 
                                                     std::vector<double> weightings, 
                                                     std::vector<double> basePD,
@@ -50,7 +50,7 @@ namespace sbsa
         return true;
     }
 
-    std::vector<string> IFRSEarlyWarningDashboard::getSectors()
+    std::vector<string> IFRSEarlyWarning::getSectors()
     {
         for (size_t i = 0; i < sectors.size(); ++i)
         {
@@ -68,11 +68,11 @@ namespace sbsa
         return sectorNames;
     }
 
-    void IFRSEarlyWarningDashboard::getChangeInRatings(std::vector<string> &headings, 
+    void IFRSEarlyWarning::getChangeInRatings(std::vector<string> &headings, 
                                                        std::vector<string> &sectorNames,
                                                        std::vector<std::vector<double>> &data)
     {        
-        std::vector<string> uniqueSectors = IFRSEarlyWarningDashboard::getSectors(); 
+        std::vector<string> uniqueSectors = IFRSEarlyWarning::getSectors(); 
         std::vector<int> sectorComposition = std::vector<int>(uniqueSectors.size(), 0); 
 
         headings = std::vector<string>();
@@ -130,7 +130,7 @@ namespace sbsa
         return;
     }
 
-    void IFRSEarlyWarningDashboard::camelCase(string &s)
+    void IFRSEarlyWarning::camelCase(string &s)
     {
         bool cap = true;
         for(unsigned int i = 0; i < s.length(); i++)

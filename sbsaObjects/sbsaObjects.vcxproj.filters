@@ -9,9 +9,21 @@
     <ClCompile Include="IFRS\IFRSEarlyWarningCompanyObject.cpp">
       <Filter>IFRS</Filter>
     </ClCompile>
+    <ClCompile Include="IFRS\PRMCSectorObject.cpp">
+      <Filter>IFRS</Filter>
+    </ClCompile>
+    <ClCompile Include="IFRS\IFRSEarlyWarningDashboardObject.cpp">
+      <Filter>IFRS</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IFRS\IFRSEarlyWarningCompanyObject.h">
+      <Filter>IFRS</Filter>
+    </ClInclude>
+    <ClInclude Include="IFRS\PRMCSectorObject.h">
+      <Filter>IFRS</Filter>
+    </ClInclude>
+    <ClInclude Include="IFRS\IFRSEarlyWarningDashboardObject.h">
       <Filter>IFRS</Filter>
     </ClInclude>
   </ItemGroup>

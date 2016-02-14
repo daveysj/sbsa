@@ -18,10 +18,10 @@ namespace sbsa
    sbsaObjects::IFRSEarlyWarningDashboard
 
     =======================================================================================*/
-    class IFRSEarlyWarningDashboard
+    class IFRSEarlyWarning
     {
     public:
-        IFRSEarlyWarningDashboard(std::vector<string> shareNames, 
+        IFRSEarlyWarning(std::vector<string> shareNames, 
                                   std::vector<string> sectors, 
                                   std::vector<double> weightings, 
                                   std::vector<double> basePD,

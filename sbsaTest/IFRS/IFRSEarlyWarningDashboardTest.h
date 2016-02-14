@@ -24,7 +24,7 @@ class IFRSEarlyWarningDashboardTest
 
     static boost::unit_test_framework::test_suite* suite();
 
-    static boost::shared_ptr<IFRSEarlyDashboard> getTestDashboard();
+    static boost::shared_ptr<IFRSEarlyWarningDashboard> getTestDashboard();
 };
 
 #endif
