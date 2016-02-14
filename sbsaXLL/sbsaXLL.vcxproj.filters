@@ -12,11 +12,41 @@
     <ClCompile Include="Functions_IFRSEarlyWarning.cpp">
       <Filter>Functions</Filter>
     </ClCompile>
+    <ClCompile Include="Conversions\matrixtooper.cpp">
+      <Filter>Conversions</Filter>
+    </ClCompile>
+    <ClCompile Include="Conversions\opertomatrix.cpp">
+      <Filter>Conversions</Filter>
+    </ClCompile>
+    <ClCompile Include="Conversions\opertovector.cpp">
+      <Filter>Conversions</Filter>
+    </ClCompile>
+    <ClCompile Include="Conversions\scalartooper.cpp">
+      <Filter>Conversions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ObjectCommon.h" />
     <ClInclude Include="Register_SBSA.h">
       <Filter>Register</Filter>
+    </ClInclude>
+    <ClInclude Include="Conversions\all.hpp">
+      <Filter>Conversions</Filter>
+    </ClInclude>
+    <ClInclude Include="Conversions\matrixtooper.hpp">
+      <Filter>Conversions</Filter>
+    </ClInclude>
+    <ClInclude Include="Conversions\opertomatrix.hpp">
+      <Filter>Conversions</Filter>
+    </ClInclude>
+    <ClInclude Include="Conversions\opertovector.hpp">
+      <Filter>Conversions</Filter>
+    </ClInclude>
+    <ClInclude Include="Conversions\scalartooper.hpp">
+      <Filter>Conversions</Filter>
+    </ClInclude>
+    <ClInclude Include="Conversions\vectortooper.hpp">
+      <Filter>Conversions</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -25,6 +55,9 @@
     </Filter>
     <Filter Include="Functions">
       <UniqueIdentifier>{6dd732e9-a816-4899-b5ce-e458d03e6fba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Conversions">
+      <UniqueIdentifier>{8b9df79d-22cc-4360-aea0-363e9bc65852}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

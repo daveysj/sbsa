@@ -134,7 +134,7 @@ DLLEXPORT int xlAutoClose() {
         return 1;
     } catch (const std::exception &e) {
         std::ostringstream err;
-        err << "Error unloading sjd xll objects: " << e.what();
+        err << "Error unloading sbsa xll objects: " << e.what();
         Excel(xlcAlert, 0, 1, TempStrStl(err.str()));
         Excel(xlFree, 0, 1, &xDll);
         return 0;

@@ -30,7 +30,11 @@ namespace sbsaObjects
         ObjectHandler::LibraryObject<sbsa::IFRSEarlyWarningCompany>(properties, permanent) 
     {
         libraryObject_ = boost::shared_ptr<sbsa::IFRSEarlyWarningCompany>(new
-                           sbsa::IFRSEarlyWarningCompany(companyName, companySector, companySubSector));    
+                           sbsa::IFRSEarlyWarningCompany(companyName, 
+                                                         companySector, 
+                                                         companySubSector,
+                                                         marketCap,
+                                                         historicPDs));    
     }
 
    string IFRSEarlyWarningCompany::getCompanySummary()

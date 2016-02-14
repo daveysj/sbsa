@@ -82,12 +82,22 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="addin_SBSA.cpp" />
+    <ClCompile Include="Conversions\matrixtooper.cpp" />
+    <ClCompile Include="Conversions\opertomatrix.cpp" />
+    <ClCompile Include="Conversions\opertovector.cpp" />
+    <ClCompile Include="Conversions\scalartooper.cpp" />
     <ClCompile Include="Functions_IFRSEarlyWarning.cpp" />
     <ClCompile Include="ObjectCommon.cpp" />
     <ClCompile Include="Register_IFRSEarlyWarning.cpp" />
     <ClCompile Include="Register_SBSA.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Conversions\all.hpp" />
+    <ClInclude Include="Conversions\matrixtooper.hpp" />
+    <ClInclude Include="Conversions\opertomatrix.hpp" />
+    <ClInclude Include="Conversions\opertovector.hpp" />
+    <ClInclude Include="Conversions\scalartooper.hpp" />
+    <ClInclude Include="Conversions\vectortooper.hpp" />
     <ClInclude Include="ObjectCommon.h" />
     <ClInclude Include="Register_SBSA.h" />
   </ItemGroup>

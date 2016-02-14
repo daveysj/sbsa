@@ -26,7 +26,7 @@ DLLEXPORT char *createIFRSCompany(char *objectID,
                                   char *companyNameChar,
                                   char *companySectorChar,
                                   char *companySubSectorChar,
-                                  double *marketCap,
+                                  double marketCap,
                                   OPER *historicPDDates,
                                   OPER *historicPDs,
                                   bool *permanent) 
@@ -45,11 +45,15 @@ DLLEXPORT char *createIFRSCompany(char *objectID,
 
         std::string companySubsector(companySubSectorChar);
            
+        std::vector<double> pds =
+            ObjectHandler::operToVector<double>(*historicPDs, "ProbabilityOfDefault");
+
+        std::vector<ObjectHandler::property_t> CurveDatesCpp =
+            ObjectHandler::operToVector<ObjectHandler::property_t>(*historicPDDates, "CurveDates");
+
         std::vector<QuantLib::Date> pdDates =
             ObjectHandler::operToVector<QuantLib::Date>(*historicPDDates, "PDDates");
 
-        std::vector<double> pds =
-            ObjectHandler::operToVector<double>(*historicPDs, "ProbabilityOfDefault");
 
         // Strip the Excel cell update counter suffix from Object IDs        
         std::string ObjectIdStrip = ObjectHandler::CallingRange::getStub(objectID);
@@ -80,7 +84,7 @@ DLLEXPORT char *createIFRSCompany(char *objectID,
                                                               companyName, 
                                                               companySector, 
                                                               companySubsector,
-                                                              *marketCap,
+                                                              marketCap,
                                                               historicPDs,
                                                               *permanent);
 
