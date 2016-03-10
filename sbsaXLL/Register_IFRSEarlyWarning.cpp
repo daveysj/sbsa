@@ -37,6 +37,35 @@ void registerIRFS9EarlyWarning(const XLOPER &xDll)
             TempStrNoSize("\x2A""Default Probability Data"),
             TempStrNoSize("\x1D""object permanent/nonpermanent"));
 
+        Excel(xlfRegister, 0, 14, &xDll,
+            TempStrNoSize("\x13""createIFRSDashboard"),
+            TempStrNoSize("\x06""CCPPL#"),
+            TempStrNoSize("\x13""createIFRSDashboard"),
+            TempStrNoSize("\x24""ObjectID,Companies,Trigger,Permanent"),
+            TempStrNoSize("\x01""1"),                   
+            TempStrNoSize("\x04""PMRR"),
+            TempStrNoSize("\x00"""),                    
+            TempStrNoSize("\x00"""),                    
+            TempStrNoSize("\x30""Constructs a Dashboard Object and returns its ID"),
+            TempStrNoSize("\x09""Object ID"),
+            TempStrNoSize("\x38""List of all the companies that are part of the dashboard"),
+            TempStrNoSize("\x07""Trigger"),
+            TempStrNoSize("\x1D""object permanent/nonpermanent"));
+
+        Excel(xlfRegister, 0, 14, &xDll,
+            TempStrNoSize("\x10""createPMRRSector"),
+            TempStrNoSize("\x06""CCCPL#"),
+            TempStrNoSize("\x10""createPMRRSector"),
+            TempStrNoSize("\x2D""SectorName,SubSectorName,ReviewDate,Permanent"),
+            TempStrNoSize("\x01""1"),                   
+            TempStrNoSize("\x04""PMRR"),
+            TempStrNoSize("\x00"""),                    
+            TempStrNoSize("\x00"""),                    
+            TempStrNoSize("\x4A""Constructs a PMRR Sector and returns it ID (defined by the subsector name)"),
+            TempStrNoSize("\x0B""Sector Name"),
+            TempStrNoSize("\x3C""SubSector Name (used as the ObjectID so this must be unique)"),
+            TempStrNoSize("\x15""Subsector Review Date"),
+            TempStrNoSize("\x1D""object permanent/nonpermanent"));
 }
 
 void unregisterIRFS9EarlyWarning(const XLOPER &xDll) 
@@ -86,5 +115,43 @@ void unregisterIRFS9EarlyWarning(const XLOPER &xDll)
 
         Excel4(xlfRegisterId, &xlRegID, 2, &xDll,
             TempStrNoSize("\x11""createIFRSCompany"));
+        Excel4(xlfUnregister, 0, 1, &xlRegID);
+
+        Excel(xlfRegister, 0, 14, &xDll,
+            TempStrNoSize("\x13""createIFRSDashboard"),
+            TempStrNoSize("\x06""CCPPL#"),
+            TempStrNoSize("\x13""createIFRSDashboard"),
+            TempStrNoSize("\x24""ObjectID,Companies,Trigger,Permanent"),
+            TempStrNoSize("\x01""1"),                   
+            TempStrNoSize("\x04""PMRR"),
+            TempStrNoSize("\x00"""),                    
+            TempStrNoSize("\x00"""),                    
+            TempStrNoSize("\x30""Constructs a Dashboard Object and returns its ID"),
+            TempStrNoSize("\x09""Object ID"),
+            TempStrNoSize("\x38""List of all the companies that are part of the dashboard"),
+            TempStrNoSize("\x07""Trigger"),
+            TempStrNoSize("\x1D""object permanent/nonpermanent"));
+
+        Excel4(xlfRegisterId, &xlRegID, 2, &xDll,
+            TempStrNoSize("\x11""createIFRSDashboard"));
+        Excel4(xlfUnregister, 0, 1, &xlRegID);
+
+        Excel(xlfRegister, 0, 14, &xDll,
+            TempStrNoSize("\x10""createPMRRSector"),
+            TempStrNoSize("\x06""CCCPL#"),
+            TempStrNoSize("\x10""createPMRRSector"),
+            TempStrNoSize("\x2D""SectorName,SubSectorName,ReviewDate,Permanent"),
+            TempStrNoSize("\x01""1"),                   
+            TempStrNoSize("\x04""PMRR"),
+            TempStrNoSize("\x00"""),                    
+            TempStrNoSize("\x00"""),                    
+            TempStrNoSize("\x4A""Constructs a PMRR Sector and returns it ID (defined by the subsector name)"),
+            TempStrNoSize("\x0B""Sector Name"),
+            TempStrNoSize("\x3C""SubSector Name (used as the ObjectID so this must be unique)"),
+            TempStrNoSize("\x15""Subsector Review Date"),
+            TempStrNoSize("\x1D""object permanent/nonpermanent"));
+
+        Excel4(xlfRegisterId, &xlRegID, 2, &xDll,
+            TempStrNoSize("\x10""createPMRRSector"));
         Excel4(xlfUnregister, 0, 1, &xlRegID);
 }

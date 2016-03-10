@@ -22,5 +22,14 @@ namespace sbsaObjects
          sbsa::IFRSEarlyWarningDashboard(sbsaCompanies));
     }
 
+    bool IFRSEarlyWarningDashboard::isOK() const
+    {
+       return libraryObject_->isOK();
+    }
+
+    string IFRSEarlyWarningDashboard::getErrorMessages() const
+    {
+       return libraryObject_->getErrorMessagesAsString();
+    }
 
 }

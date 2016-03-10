@@ -187,16 +187,16 @@ DLLEXPORT char *createPMRRSector(char *sectorNameChar,
             ObjectHandler::ConvertOper(*subsectorReviewDateInput), "Sector Review Date");
 
       // Strip the Excel cell update counter suffix from Object IDs        
-      std::string ObjectIdStrip = ObjectHandler::CallingRange::getStub(sectorNameChar);
+      std::string ObjectIdStrip = ObjectHandler::CallingRange::getStub(subsectorNameChar);
       // Construct the Value Object
       boost::shared_ptr<ObjectHandler::ValueObject> valueObject(
             new sjdObjects::ValueObjects::GenericUnimplementedValueObject(ObjectIdStrip,false));
       // Construct the Object
         sbsaObjects::PMRRSector *sector = new sbsaObjects::PMRRSector(valueObject,
-                                                                       sectorName, 
-                                                                       subsectorName, 
-                                                                       subsectorReviewDate,
-                                                                       *permanent);
+                                                                      sectorName, 
+                                                                      subsectorNameChar, 
+                                                                      subsectorReviewDate,
+                                                                      *permanent);
         boost::shared_ptr<ObjectHandler::Object> object(sector);
       // Store the Object in the Repository
       std::string returnValue =
@@ -298,11 +298,11 @@ DLLEXPORT OPER *ifrsPDMigration(OPER *shareNames,
 
         string errorMessage = "";
         if (!sbsa::IFRSEarlyWarning::checkDimensions(shareNamesCpp,
-                                                                     sectorsCpp,
-                                                                     weightingsCpp,
-                                                                     basePDCpp,
-                                                                     currentPDCpp,
-                                                                     errorMessage))
+                                                     sectorsCpp,
+                                                     weightingsCpp,
+                                                     basePDCpp,
+                                                     currentPDCpp,
+                                                     errorMessage))
         {
             ObjectHandler::scalarToOper(errorMessage, returnValue);        
             return &returnValue;
