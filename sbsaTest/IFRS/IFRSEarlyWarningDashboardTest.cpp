@@ -60,28 +60,38 @@ void IFRSEarlyWarningDashboardTest::testAgainstPmrrSubsectors()
    pmmrSector5.subsectorName = "SubSector5";
    pmmrSector5.subsectorReviewDate = Date(27, Jan, 2016);
 
-   vector<pmrrSector> pmrrSectors;
-   pmrrSectors.push_back(pmmrSector1);
-   pmrrSectors.push_back(pmmrSector2);
-   pmrrSectors.push_back(pmmrSector4);
-   pmrrSectors.push_back(pmmrSector5);
+   vector<pmrrSector> pmrrSectorsVector;
+   pmrrSectorsVector.push_back(pmmrSector1);
+   pmrrSectorsVector.push_back(pmmrSector2);
+   pmrrSectorsVector.push_back(pmmrSector4);
+   pmrrSectorsVector.push_back(pmmrSector5);
+   PMRRSectors pmrrSectors(pmrrSectorsVector);
 
-   vector<pmrrSector> unrepresentedPmrrSubsectors;
+   vector<pmrrSector> unrepresentedPmrrSubsectorsVector;
+   PMRRSectors unrepresentedPmrrSubsectors;
    set<string> unrepresetnedSubsectorNames;
 
-   dashboard->checkAllSubSectorsExist(pmrrSectors, unrepresentedPmrrSubsectors, unrepresetnedSubsectorNames);
-   BOOST_CHECK(unrepresentedPmrrSubsectors.size() == 2);
+   dashboard->checkAllSubSectorsExist(pmrrSectorsVector, unrepresentedPmrrSubsectorsVector, unrepresetnedSubsectorNames);
+   BOOST_CHECK(unrepresentedPmrrSubsectorsVector.size() == 2);
+   BOOST_CHECK(unrepresetnedSubsectorNames.size() == 1);
+
+   dashboard->checkAllSubSectorsExist(pmrrSectorsVector, pmrrSectors, unrepresetnedSubsectorNames);   
+   BOOST_CHECK(pmrrSectors.getAllSectors().size() == 2);
    BOOST_CHECK(unrepresetnedSubsectorNames.size() == 1);
 
    pmrrSector pmmrSector3;
    pmmrSector3.sectorName = "Sector1";
    pmmrSector3.subsectorName = "SubSector3";
    pmmrSector3.subsectorReviewDate = Date(27, Jan, 2016);
-   pmrrSectors.push_back(pmmrSector3);
-   dashboard->checkAllSubSectorsExist(pmrrSectors, unrepresentedPmrrSubsectors, unrepresetnedSubsectorNames);
-   BOOST_CHECK(unrepresentedPmrrSubsectors.size() == 2);
+   pmrrSectorsVector.push_back(pmmrSector3);
+   dashboard->checkAllSubSectorsExist(pmrrSectorsVector, unrepresentedPmrrSubsectorsVector, unrepresetnedSubsectorNames);
+   BOOST_CHECK(unrepresentedPmrrSubsectorsVector.size() == 2);
    BOOST_CHECK(unrepresetnedSubsectorNames.size() == 0);
 
+   PMRRSectors pmrrSectors2(pmrrSectorsVector);
+   dashboard->checkAllSubSectorsExist(pmrrSectorsVector, pmrrSectors2, unrepresetnedSubsectorNames);
+   BOOST_CHECK(pmrrSectors2.getAllSectors().size() == 2);
+   BOOST_CHECK(unrepresetnedSubsectorNames.size() == 0);
 }
 
 void IFRSEarlyWarningDashboardTest::testChangeInPDForOneSector()

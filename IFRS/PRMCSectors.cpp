@@ -2,30 +2,36 @@
 
 namespace sbsa
 {
-   /*
-   PMRRSectors::PMRRSectors(vector<boost::shared_ptr<pmrrSector>> allSectorsInput)
+   PMRRSectors::PMRRSectors()
+   {
+      allSectors = vector<pmrrSector>();
+      allSectorNames = set<string>();
+      allSubsectorNames = set<string>();
+   }
+   
+   PMRRSectors::PMRRSectors(vector<pmrrSector> allSectorsInput)
    {
       allSectors = allSectorsInput;
       for (size_t i = 0; i < allSectors.size(); ++i) 
       {
-         allSectorNames.insert(allSectors[i]->sectorName);
-         allSubsectorNames.insert(allSectors[i]->subsectorName);
+         allSectorNames.insert(allSectors[i].sectorName);
+         allSubsectorNames.insert(allSectors[i].subsectorName);
       }
    }
 
-   vector<boost::shared_ptr<pmrrSector>> PMRRSectors::getAllSectors()
+   vector<pmrrSector> PMRRSectors::getAllSectors()
    {
       return allSectors;
    }
 
-   string<string> PMRRSectors::getAllSectorNames()
+   set<string> PMRRSectors::getAllSectorNames()
    {
       return allSectorNames;
    }
 
-   string<string> PMRRSectors::getAllSubsectorNames()
+   set<string> PMRRSectors::getAllSubsectorNames()
    {
       return allSubsectorNames;
    }
-   */
+   
 }

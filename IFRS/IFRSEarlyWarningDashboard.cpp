@@ -87,8 +87,8 @@ namespace sbsa
    }
 
    void IFRSEarlyWarningDashboard::checkAllSubSectorsExist(vector<pmrrSector> pmrrSectors, 
-                                                    vector<pmrrSector> &unrepresentedPmrrSubsectors,
-                                                    set<string> &unrepresetnedSubsectors)
+                                                           vector<pmrrSector> &unrepresentedPmrrSubsectors,
+                                                           set<string> &unrepresetnedSubsectors)
    {
       unrepresentedPmrrSubsectors = vector<pmrrSector>();
       unrepresetnedSubsectors = set<string>();
@@ -112,6 +112,16 @@ namespace sbsa
             unrepresetnedSubsectors.insert(*uniqueSubsectorIT);
          }
       }
+   }
+
+   void IFRSEarlyWarningDashboard::checkAllSubSectorsExist(PMRRSectors pmrrSectors, 
+                                                           PMRRSectors &unrepresentedPmrrSubsectors,
+                                                           set<string> &unrepresetnedSubsectors)
+   {
+      vector<pmrrSector> unrepresentedPmrrSubsectorsVector = vector<pmrrSector>();
+      vector<pmrrSector> pmrrSectorsVector = pmrrSectors.getAllSectors();
+      checkAllSubSectorsExist(pmrrSectorsVector, unrepresentedPmrrSubsectorsVector, unrepresetnedSubsectors);
+      unrepresentedPmrrSubsectors = PMRRSectors(unrepresentedPmrrSubsectorsVector);
    }
 
 

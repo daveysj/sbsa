@@ -21,5 +21,24 @@ namespace sbsaObjects
    }
 
 
+   /*======================================================================================
+   PMRRSectors
+
+    =======================================================================================*/
+   PMRRSectors::PMRRSectors(const boost::shared_ptr<ObjectHandler::ValueObject>& properties,
+                            std::vector<boost::shared_ptr<PMRRSector>> sectors, 
+                            bool permanent) :
+      ObjectHandler::LibraryObject<sbsa::PMRRSectors>(properties, permanent) 
+   {
+      vector<sbsa::pmrrSector> allSectors;
+      for (size_t i = 0; i < sectors.size(); ++i) 
+      {
+         boost::shared_ptr<sbsa::pmrrSector> sector;
+         sectors[i]->getLibraryObject(sector);
+         allSectors.push_back(*sector);
+      }
+
+      libraryObject_ = boost::shared_ptr<sbsa::PMRRSectors>(new sbsa::PMRRSectors(allSectors));
+   }
 
 }

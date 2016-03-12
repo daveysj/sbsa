@@ -10,7 +10,7 @@
 namespace sbsaObjects 
 {        
     /*======================================================================================
-    PRMCSectors
+    PRMCSector
 
     =======================================================================================*/
     class PMRRSector : public ObjectHandler::LibraryObject<sbsa::pmrrSector> 
@@ -27,6 +27,22 @@ namespace sbsaObjects
         OH_LIB_CTOR(PMRRSector, sbsa::pmrrSector) 
     };
  
+    /*======================================================================================
+    PRMCSector
+
+    =======================================================================================*/
+    class PMRRSectors : public ObjectHandler::LibraryObject<sbsa::PMRRSectors> 
+    { 
+    public:
+        PMRRSectors(const boost::shared_ptr<ObjectHandler::ValueObject>& properties,
+                    std::vector<boost::shared_ptr<sbsaObjects::PMRRSector>> sectors, 
+                    bool permanent);
+
+
+    protected: 
+        OH_LIB_CTOR(PMRRSectors, sbsa::PMRRSectors) 
+    };
+    
 }
 
 #endif

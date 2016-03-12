@@ -207,7 +207,51 @@ DLLEXPORT char *createPMRRSector(char *sectorNameChar,
     SBSA_XLL_CATCH_STRING()
 }
 
+/*======================================================================================
+Create an instance of the object sbsaObjects::PMRRSectors and return its ID. 
+=======================================================================================*/
+DLLEXPORT char *createPMRRSectors(char *objectID,
+                                  OPER *inputPMRRSectors,
+                                  bool *permanent) 
+{
 
+    boost::shared_ptr<ObjectHandler::FunctionCall> functionCall;
+    static char ret[XL_MAX_STR_LEN];
+    try 
+   {
+      functionCall = boost::shared_ptr<ObjectHandler::FunctionCall>
+            (new ObjectHandler::FunctionCall("createPMRRSectors"));
+
+      std::vector<boost::shared_ptr<sbsaObjects::PMRRSector>> sectors;
+      std::vector<string> sectorIDLib = ObjectHandler::operToVector<string>(*inputPMRRSectors, "PMRRSectorIDs");
+      for (size_t i = 0; i < sectorIDLib.size(); ++i) 
+      {
+         OH_GET_OBJECT(pmrrSectorIdObjPtr, sectorIDLib[i], sbsaObjects::PMRRSector);
+         sectors.push_back(pmrrSectorIdObjPtr);
+      }
+
+      // Strip the Excel cell update counter suffix from Object IDs        
+      std::string ObjectIdStrip = ObjectHandler::CallingRange::getStub(objectID);
+      // Construct the Value Object
+      boost::shared_ptr<ObjectHandler::ValueObject> valueObject(
+            new sjdObjects::ValueObjects::GenericUnimplementedValueObject(ObjectIdStrip,false));
+      // Construct the Object
+        sbsaObjects::PMRRSectors *pmrrSectors = new sbsaObjects::PMRRSectors(valueObject, sectors, *permanent);
+
+        boost::shared_ptr<ObjectHandler::Object> object(pmrrSectors);
+      // Store the Object in the Repository
+      std::string returnValue =
+            ObjectHandler::RepositoryXL::instance().storeObject(ObjectIdStrip, object, true);
+      ObjectHandler::stringToChar(returnValue, ret);
+      return ret;
+    } 
+    SBSA_XLL_CATCH_STRING()
+}
+//*/
+
+/*======================================================================================
+Function to extact PD Migrations from data. 
+=======================================================================================*/
 DLLEXPORT OPER *ifrsPDMigration(OPER *shareNames,
                                 OPER *sectors,
                                 OPER *weightings,

@@ -62,6 +62,10 @@ namespace sbsa
                                    std::vector<pmrrSector> &unrepresentedPmrrSubsectors,
                                    set<string> &unrepresetnedSubsectorNames);
 
+      void checkAllSubSectorsExist(PMRRSectors pmrrSectors, 
+                                   PMRRSectors &unrepresentedPmrrSubsectors,
+                                   set<string> &unrepresetnedSubsectorNames);
+
       std::vector<ifrsSector> getSubsectorRatingsChange(std::vector<pmrrSector> pmrrSectors, Date toDate);
 
       // Groups companies by Subsector name (camelCase version)

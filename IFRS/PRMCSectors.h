@@ -2,6 +2,7 @@
 #define SBSA_PMRRSector
 
 #include <vector>
+#include <set>
 
 #include <boost\shared_ptr.hpp>
 
@@ -13,29 +14,31 @@ using namespace QuantLib;
 
 namespace sbsa
 {
-   struct pmrrSector
+   class pmrrSector
    {
+   public:
       string sectorName;
       string subsectorName;
       Date subsectorReviewDate;
    };
 
-   /*
+   
    class PMRRSectors
    {
    public:
-      PMRRSectors(vector<boost::shared_ptr<pmrrSector>> allSectors);
+      PMRRSectors();
+      PMRRSectors(std::vector<pmrrSector> allSectors);
 
-      vector<boost::shared_ptr<pmrrSector>> getAllSectors();
-      string<string> getAllSectorNames();
-      string<string> getAllSubsectorNames();
+      std::vector<pmrrSector> getAllSectors();
+      set<string> getAllSectorNames();
+      set<string> getAllSubsectorNames();
 
    private:
-      vector<boost::shared_ptr<pmrrSector>> allSectors;
+      std::vector<pmrrSector> allSectors;
       set<string> allSectorNames;
       set<string> allSubsectorNames;
    };
-   */
+   
 }
 
 
