@@ -163,6 +163,64 @@ DLLEXPORT char *createIFRSDashboard(char *objectID,
 }
 
 /*======================================================================================
+Returns a list of unique sectors or subsectors in a dashboard
+=======================================================================================*/
+DLLEXPORT OPER *getDashboardSectorSubSector(char *objectID,
+                                            bool *sectorSwitch) 
+{
+
+    boost::shared_ptr<ObjectHandler::FunctionCall> functionCall;
+    static XLOPER returnValue;
+    try 
+    {
+        functionCall = boost::shared_ptr<ObjectHandler::FunctionCall>
+            (new ObjectHandler::FunctionCall("getDashboardSectorSubSector"));
+
+        OH_GET_OBJECT(IFRSDashboardObjectIdPtr, objectID, sbsaObjects::IFRSEarlyWarningDashboard)
+        if (IFRSDashboardObjectIdPtr->isOK())
+        {
+            std::vector<string> uniqueNames = IFRSDashboardObjectIdPtr->getUnique(*sectorSwitch);
+            ObjectHandler::vectorToOper(uniqueNames, returnValue);
+        }
+        else
+        {
+            ObjectHandler::scalarToOper(IFRSDashboardObjectIdPtr->getErrorMessages(), returnValue);
+        }
+        return &returnValue;
+    }
+    SBSA_XLL_CATCH_OPER()
+}
+
+/*======================================================================================
+Returns a list of unique sectors or subsectors in a dashboard
+=======================================================================================*/
+DLLEXPORT OPER *getDashboardCompanies(char *objectID,
+                                      bool *withDataSwitch) 
+{
+
+    boost::shared_ptr<ObjectHandler::FunctionCall> functionCall;
+    static XLOPER returnValue;
+    try 
+    {
+        functionCall = boost::shared_ptr<ObjectHandler::FunctionCall>
+            (new ObjectHandler::FunctionCall("getDashboardCompanies"));
+
+        OH_GET_OBJECT(IFRSDashboardObjectIdPtr, objectID, sbsaObjects::IFRSEarlyWarningDashboard)
+        if (IFRSDashboardObjectIdPtr->isOK())
+        {
+            std::vector<string> uniqueNames = IFRSDashboardObjectIdPtr->getCompanies(*withDataSwitch);
+            ObjectHandler::vectorToOper(uniqueNames, returnValue);
+        }
+        else
+        {
+            ObjectHandler::scalarToOper(IFRSDashboardObjectIdPtr->getErrorMessages(), returnValue);
+        }
+        return &returnValue;
+    }
+    SBSA_XLL_CATCH_OPER()
+}
+
+/*======================================================================================
 Create an instance of the object sbsaObjects::PMRRSector and return its ID. The sector
 name will be used as the object name
 =======================================================================================*/

@@ -52,6 +52,33 @@ void registerIRFS9EarlyWarning(const XLOPER &xDll)
             TempStrNoSize("\x07""Trigger"),
             TempStrNoSize("\x1D""object permanent/nonpermanent"));
 
+        Excel(xlfRegister, 0, 12, &xDll,
+            TempStrNoSize("\x1B""getDashboardSectorSubSector"),
+            TempStrNoSize("\x04""PCL#"),
+            TempStrNoSize("\x1B""getDashboardSectorSubSector"),
+            TempStrNoSize("\x0A""DashboardID,SectorData"),
+            TempStrNoSize("\x01""1"),                   
+            TempStrNoSize("\x04""PMRR"),
+            TempStrNoSize("\x00"""),                    
+            TempStrNoSize("\x00"""),                    
+            TempStrNoSize("\x35""Returns a list of Sectors / Subsectors that have Data"),
+            TempStrNoSize("\x0C""Dashboard ID"),
+            TempStrNoSize("\x3A""Return (TRUE = Sectors) (FALSE = Subsectors) default data"));
+
+        Excel(xlfRegister, 0, 12, &xDll,
+            TempStrNoSize("\x15""getDashboardCompanies"),
+            TempStrNoSize("\x04""PCL#"),
+            TempStrNoSize("\x15""getDashboardCompanies"),
+            TempStrNoSize("\x14""DashboardID,WithData"),
+            TempStrNoSize("\x01""1"),                   
+            TempStrNoSize("\x04""PMRR"),
+            TempStrNoSize("\x00"""),                    
+            TempStrNoSize("\x00"""),                    
+            TempStrNoSize("\x45""Returns a list of company names from a dashboard with or without data"),
+            TempStrNoSize("\x0C""Dashboard ID"),
+            TempStrNoSize("\x3D""Return companies (TRUE = With) (FALSE = Without) default data"));
+
+
         Excel(xlfRegister, 0, 14, &xDll,
             TempStrNoSize("\x10""createPMRRSector"),
             TempStrNoSize("\x06""CCCPL#"),
@@ -65,6 +92,20 @@ void registerIRFS9EarlyWarning(const XLOPER &xDll)
             TempStrNoSize("\x0B""Sector Name"),
             TempStrNoSize("\x3C""SubSector Name (used as the ObjectID so this must be unique)"),
             TempStrNoSize("\x15""Subsector Review Date"),
+            TempStrNoSize("\x1D""object permanent/nonpermanent"));
+
+        Excel(xlfRegister, 0, 13, &xDll,
+            TempStrNoSize("\x11""createPMRRSectors"),
+            TempStrNoSize("\x05""CCPL#"),
+            TempStrNoSize("\x11""createPMRRSectors"),
+            TempStrNoSize("\x1E""ObjectID,PMRRSectors,Permanent"),
+            TempStrNoSize("\x01""1"),                   
+            TempStrNoSize("\x04""PMRR"),
+            TempStrNoSize("\x00"""),                    
+            TempStrNoSize("\x00"""),                    
+            TempStrNoSize("\x36""Creates a Collection of PMRR Sectors and returns it ID"),
+            TempStrNoSize("\x09""Object ID"),
+            TempStrNoSize("\x20""A list of the individual sectors"),
             TempStrNoSize("\x1D""object permanent/nonpermanent"));
 }
 
@@ -136,6 +177,41 @@ void unregisterIRFS9EarlyWarning(const XLOPER &xDll)
             TempStrNoSize("\x11""createIFRSDashboard"));
         Excel4(xlfUnregister, 0, 1, &xlRegID);
 
+        Excel(xlfRegister, 0, 12, &xDll,
+            TempStrNoSize("\x1B""getDashboardSectorSubSector"),
+            TempStrNoSize("\x04""PCL#"),
+            TempStrNoSize("\x1B""getDashboardSectorSubSector"),
+            TempStrNoSize("\x0A""DashboardID,SectorData"),
+            TempStrNoSize("\x01""1"),                   
+            TempStrNoSize("\x04""PMRR"),
+            TempStrNoSize("\x00"""),                    
+            TempStrNoSize("\x00"""),                    
+            TempStrNoSize("\x35""Returns a list of Sectors / Subsectors that have Data"),
+            TempStrNoSize("\x0C""Dashboard ID"),
+            TempStrNoSize("\x3A""Return (TRUE = Sectors) (FALSE = Subsectors) default data"));
+
+        Excel4(xlfRegisterId, &xlRegID, 2, &xDll,
+            TempStrNoSize("\x1B""getDashboardSectorSubSector"));
+        Excel4(xlfUnregister, 0, 1, &xlRegID);
+
+        Excel(xlfRegister, 0, 12, &xDll,
+            TempStrNoSize("\x15""getDashboardCompanies"),
+            TempStrNoSize("\x04""PCL#"),
+            TempStrNoSize("\x15""getDashboardCompanies"),
+            TempStrNoSize("\x14""DashboardID,WithData"),
+            TempStrNoSize("\x01""1"),                   
+            TempStrNoSize("\x04""PMRR"),
+            TempStrNoSize("\x00"""),                    
+            TempStrNoSize("\x00"""),                    
+            TempStrNoSize("\x45""Returns a list of company names from a dashboard with or without data"),
+            TempStrNoSize("\x0C""Dashboard ID"),
+            TempStrNoSize("\x3D""Return companies (TRUE = With) (FALSE = Without) default data"));
+
+        Excel4(xlfRegisterId, &xlRegID, 2, &xDll,
+            TempStrNoSize("\x15""getDashboardCompanies"));
+        Excel4(xlfUnregister, 0, 1, &xlRegID);
+
+
         Excel(xlfRegister, 0, 14, &xDll,
             TempStrNoSize("\x10""createPMRRSector"),
             TempStrNoSize("\x06""CCCPL#"),
@@ -153,5 +229,24 @@ void unregisterIRFS9EarlyWarning(const XLOPER &xDll)
 
         Excel4(xlfRegisterId, &xlRegID, 2, &xDll,
             TempStrNoSize("\x10""createPMRRSector"));
+        Excel4(xlfUnregister, 0, 1, &xlRegID);
+
+
+        Excel(xlfRegister, 0, 13, &xDll,
+            TempStrNoSize("\x11""createPMRRSectors"),
+            TempStrNoSize("\x05""CCPL#"),
+            TempStrNoSize("\x11""createPMRRSectors"),
+            TempStrNoSize("\x1E""ObjectID,PMRRSectors,Permanent"),
+            TempStrNoSize("\x01""1"),                   
+            TempStrNoSize("\x04""PMRR"),
+            TempStrNoSize("\x00"""),                    
+            TempStrNoSize("\x00"""),                    
+            TempStrNoSize("\x36""Creates a Collection of PMRR Sectors and returns it ID"),
+            TempStrNoSize("\x09""Object ID"),
+            TempStrNoSize("\x20""A list of the individual sectors"),
+            TempStrNoSize("\x1D""object permanent/nonpermanent"));
+
+        Excel4(xlfRegisterId, &xlRegID, 2, &xDll,
+            TempStrNoSize("\x11""createPMRRSectors"));
         Excel4(xlfUnregister, 0, 1, &xlRegID);
 }

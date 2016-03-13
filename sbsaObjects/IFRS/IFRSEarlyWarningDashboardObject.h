@@ -25,6 +25,10 @@ namespace sbsaObjects
         bool isOK() const;
         string getErrorMessages() const; 
 
+        // True for sectors, false for subsectors
+        std::vector<string> getUnique(bool sectors); 
+        // True to return companies that have data, false for companies without data
+        std::vector<string> getCompanies(bool withData);
 
     protected: 
         OH_LIB_CTOR(IFRSEarlyWarningDashboard, sbsa::IFRSEarlyWarningDashboard) 
