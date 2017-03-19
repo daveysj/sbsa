@@ -14,7 +14,7 @@ using namespace boost::assign; // used to initialize vector
 
 void IFRSEarlyWarningCompanyTest::testConstruction() 
 {
-   BOOST_MESSAGE("Testing IFRSEarlyWarningCompany ...");
+    BOOST_TEST_MESSAGE("Testing IFRSEarlyWarningCompany ...");
 
    string companyName = "Test Company"; 
    string companySector = "Test Sector"; 

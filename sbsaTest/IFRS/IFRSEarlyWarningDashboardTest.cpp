@@ -11,7 +11,7 @@ using namespace boost::assign; // used to initialize vector
 
 void IFRSEarlyWarningDashboardTest::testConstruction() 
 {
-   BOOST_MESSAGE("Testing IFRSEarlyWarningDashboard ...");
+    BOOST_TEST_MESSAGE("Testing IFRSEarlyWarningDashboard ...");
 
    boost::shared_ptr<IFRSEarlyWarningDashboard> dashboard = getTestDashboard();
 
