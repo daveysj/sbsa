@@ -6,7 +6,6 @@
 
 #include <sbsa\IFRS\PRMCSectors.h>
 
-
 namespace sbsaObjects 
 {        
     /*======================================================================================
