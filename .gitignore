@@ -33,3 +33,4 @@ _ReSharper*/
 packages/
 *.sdf
 *.xls*
+*.db
