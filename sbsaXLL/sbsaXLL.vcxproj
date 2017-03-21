@@ -39,7 +39,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(sjd);$(qlxl);$(qlo);$(ql);$(oh);$(sbsa);$(boost);;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <IncludePath>$(sjd);$(qlxl);$(qlo);$(ql);$(oh);$(sbsa);$(boost);$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LibraryPath>$(sjd)sjd\$(Configuration);$(qlxl)xll;$(log4cxx)msvc\lib;$(oh)lib;$(qlo)lib;$(ql)lib;$(boostlib);$(VCInstallDir)atlmfc\lib;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
@@ -47,7 +47,7 @@
     <TargetExt>.xll</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(sjd);$(qlxl);$(qlo);$(ql);$(oh);$(sbsa);$(boost);;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <IncludePath>$(sjd);$(qlxl);$(qlo);$(ql);$(oh);$(sbsa);$(boost);$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LibraryPath>$(sjd)sjd\$(Configuration);$(qlxl)xll;$(log4cxx)msvc\lib;$(oh)lib;$(qlo)lib;$(ql)lib;$(boostlib);$(VCInstallDir)atlmfc\lib;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>

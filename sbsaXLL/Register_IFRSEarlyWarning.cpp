@@ -135,7 +135,7 @@ void unregisterIRFS9EarlyWarning(const XLOPER &xDll)
         Excel4(xlfRegisterId, &xlRegID, 2, &xDll,
             TempStrNoSize("\x0F""ifrsPDMigration"));
         Excel4(xlfUnregister, 0, 1, &xlRegID);
-
+        
         Excel(xlfRegister, 0, 17, &xDll,
             TempStrNoSize("\x11""createIFRSCompany"),
             TempStrNoSize("\x09""CCCCBPPL#"),
@@ -157,7 +157,7 @@ void unregisterIRFS9EarlyWarning(const XLOPER &xDll)
         Excel4(xlfRegisterId, &xlRegID, 2, &xDll,
             TempStrNoSize("\x11""createIFRSCompany"));
         Excel4(xlfUnregister, 0, 1, &xlRegID);
-
+        
         Excel(xlfRegister, 0, 14, &xDll,
             TempStrNoSize("\x13""createIFRSDashboard"),
             TempStrNoSize("\x06""CCPPL#"),
